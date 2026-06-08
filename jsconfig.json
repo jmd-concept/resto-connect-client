@@ -1,0 +1,59 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "ignoreDeprecations": "6.0",
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+            "@/app/*": [
+                "./app/*"
+            ],
+            "@/components/*": [
+                "./components/*"
+            ],
+            "@/hooks/*": [
+                "./hooks/*"
+            ],
+            "@/context/*": [
+                "./context/*"
+            ],
+            "@/lib/*": [
+                "./lib/*"
+            ],
+            "@/models/*": [
+                "models/*"
+            ],
+            "@/services/*": [
+                "services/*"
+            ],
+            "@/utils/*": [
+                "utils/*"
+            ],
+            "@/styles/*": [
+                "./styles/*"
+            ],
+            "@public/*": [
+                "./public/*"
+            ],
+            "@constants/*": [
+                "./constants/*"
+            ],
+            "@stores/*": [
+                "stores/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        ".next",
+        "out"
+    ]
+    /*"include": [
+        "next-env.d.ts",
+        "**/ /*.ts",
+        "**/ /*.tsx",
+        "**/ /*.js",
+        "**/ /*.jsx"
+    ],*/
+}
