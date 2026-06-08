@@ -18,9 +18,9 @@ const MenuCard = dynamic(() => import('../component/Menu'), { ssr: false });
 const AvisSlider = dynamic(() => import('../component/avis/AvisSlider'), { ssr: false });
 const FooterComponent = dynamic(() => import('../component/Footer'), { ssr: false });
 //FORMULAIRE
-const FormCommande = dynamic(() => import('../component/formulaires/FormCommande'), { ssr: false });
-const FormLivraison = dynamic(() => import('../component/formulaires/FormLivraison'), { ssr: false });
-const FormReservation = dynamic(() => import('../component/formulaires/FormReservation'), { ssr: false });
+const FormCommande = dynamic(() => import('../component/Formulaires/FormCommande'), { ssr: false });
+const FormLivraison = dynamic(() => import('../component/Formulaires/FormLivraison'), { ssr: false });
+const FormReservation = dynamic(() => import('../component/Formulaires/FormReservation'), { ssr: false });
 
 const Preloader = () => (
   <motion.div
