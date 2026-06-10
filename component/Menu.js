@@ -1,13 +1,19 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import useMenuStore from "@/stores/useMenuStore";
+import Image from 'next/image';
 import CardFood from "./produit/CardFood";
+import useMenuStore from "@/stores/useMenuStore";
+import { useTheme } from "@/context/useThemeProvider";
 import { FiSearch } from "react-icons/fi";
 
 const INITIAL_ITEMS = 4;
 
+// Liste simple d'icônes pour attribuer selon l'ordre des catégories
+const ICONS = ["🍽️", "🥗", "🍖", "🍹", "🐠", "🍰", "✨"];
+
 export default function MenuCard() {
+    const { isDark } = useTheme();
     const {
         data,
         loading,
@@ -20,7 +26,7 @@ export default function MenuCard() {
     const [activeCategory, setActiveCategory] = useState("");
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY >= 1240);
+        const handleScroll = () => setScrolled(window.scrollY > 10);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -28,7 +34,6 @@ export default function MenuCard() {
     useEffect(() => {
         fetchProduits();
     }, [fetchProduits]);
-
 
     const handleVoirPlus = (categorieId) => {
         setVisibleItems(prev => ({
@@ -45,26 +50,11 @@ export default function MenuCard() {
                 behavior: "smooth",
                 block: "start"
             });
-
-            //setActiveCategory(categoryId);
             setActiveCategory(Number(categoryId));
         }
     };
 
     const produits = data?.data || [];
-
-    /*  const categories = [
-         ...new Map(
-             produits.map(produit => [
-                 produit.Categorie?.id_categorie,
-                 {
-                     id: produit.Categorie?.id_categorie,
-                     nom: produit.Categorie?.nom
-                 }
-             ])
-         ).values()
-     ]; */
-
     const categories = data?.categories || [];
 
     useEffect(() => {
@@ -76,7 +66,7 @@ export default function MenuCard() {
     if (loading) {
         return (
             <div className="p-6 text-center min-h-[400px] flex items-center justify-center">
-                <p className="animate-pulse">
+                <p className="animate-pulse text-gray-500">
                     Chargement des données...
                 </p>
             </div>
@@ -92,21 +82,19 @@ export default function MenuCard() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto p-4">
+        <div className="w-full md:max-w-7xl mx-auto">
+            {/**${scrolled ? "z-20 bg-gray-600 text-white shadow-md" : "z-10 bg-transparent"} */}
 
-            {/* Navigation catégories */}
-            <div className={`
-                ${scrolled ? "z-20 bg-gray-800" : "z-10"} sticky top-0 border rounded-xl p-4 mb-8 flex gap-2 overflow-x-auto`
-            }
-            >
+            {/* Navigation catégories (Sticky) */}
+            <div className={`sticky top-21 z-10 bg-gray-400 text-white shadow-md rounded-md p-4 mb-8 flex gap-2 overflow-x-auto transition-all duration-300`}>
                 {categories.map(categorie => (
                     <button
                         key={categorie.id_categorie}
                         onClick={() => scrollToCategory(categorie.id_categorie)}
-                        className={`px-4 py-2 rounded-full whitespace-nowrap transition
+                        className={`px-4 py-2 rounded-full whitespace-nowrap transition text-sm font-medium
                             ${activeCategory === categorie.id_categorie
                                 ? "bg-amber-600 text-white"
-                                : "bg-gray-300 hover:bg-amber-100"
+                                : "bg-gray-200 text-gray-700 hover:bg-amber-100"
                             }`}
                     >
                         {categorie.nom}
@@ -120,24 +108,26 @@ export default function MenuCard() {
                         size={50}
                         className="mx-auto text-amber-500 mb-4"
                     />
-
                     <h3 className="text-xl font-bold">
                         Aucun produit trouvé
                     </h3>
                 </div>
             ) : (
-                <div className="space-y-12">
+                <div className="space-y-16">
 
-                    {categories.map(categorie => {
+                    {categories.map((categorie, index) => {
+                        const produitsDeLaCategorie = produits.filter(
+                            produit => produit.id_categorie === categorie.id_categorie
+                        );
 
-                        const produitsDeLaCategorie =
-                            produits.filter(
-                                produit =>
-                                    produit.id_categorie === categorie.id_categorie
-                            );
+                        // Si la catégorie ne contient aucun produit, optionnel : on ne l'affiche pas
+                        if (produitsDeLaCategorie.length === 0) return null;
 
                         const nombreVisible = visibleItems[categorie.id_categorie] || INITIAL_ITEMS;
                         const produitsVisibles = produitsDeLaCategorie.slice(0, nombreVisible);
+
+                        // Assigne une icône de la liste ou une icône par défaut si l'index dépasse
+                        const categoryIcon = ICONS[index % ICONS.length];
 
                         return (
                             <section
@@ -145,17 +135,30 @@ export default function MenuCard() {
                                 id={`cat-${categorie.id_categorie}`}
                                 className="scroll-mt-28"
                             >
-
-                                <div className="flex items-center gap-3 mb-6 border-b border-gray-600 pb-3">
-                                    <h2 className="text-3xl font-bold">
-                                        {categorie.nom}
-                                    </h2>
-
-                                    <span className="bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs">
-                                        {produitsDeLaCategorie.length}
-                                    </span>
+                                {/* Une seule bannière Hero par catégorie */}
+                                <div className={`flex items-center gap-3 mt-8 mb-6 pb-3 border-b
+                                    ${isDark
+                                        ? "border-gray-700"
+                                        : "border-gray-200"} `}
+                                >
+                                    <CardHeroCategorie
+                                        categorie={categorie.nom}
+                                        count={produitsDeLaCategorie.length}
+                                        icon={categoryIcon}
+                                    />
                                 </div>
 
+                                {/* Titre de la section */}
+                                {/*  <div className="flex items-center gap-3 mt-8 mb-6 border-b border-gray-200 pb-3">
+                                    <h2 className="text-2xl font-bold text-gray-800">
+                                        {categorie.nom}
+                                    </h2>
+                                    <span className="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                                        {produitsDeLaCategorie.length}
+                                    </span>
+                                </div> */}
+
+                                {/* Grille de produits */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                                     {produitsVisibles.map(produit => (
                                         <CardFood
@@ -165,15 +168,14 @@ export default function MenuCard() {
                                     ))}
                                 </div>
 
+                                {/* Bouton Voir Plus */}
                                 {nombreVisible < produitsDeLaCategorie.length && (
                                     <div className="flex justify-center mt-8">
                                         <button
                                             onClick={() => handleVoirPlus(categorie.id_categorie)}
-                                            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold"
+                                            className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-semibold transition shadow-md"
                                         >
-                                            Voir plus (
-                                            {produitsDeLaCategorie.length - nombreVisible}
-                                            )
+                                            Voir plus ({produitsDeLaCategorie.length - nombreVisible})
                                         </button>
                                     </div>
                                 )}
@@ -186,6 +188,44 @@ export default function MenuCard() {
         </div>
     );
 }
+
+
+export const CardHeroCategorie = ({ categorie, count, icon }) => {
+
+    const { isDark } = useTheme();
+
+    return (
+        <div className="relative min-h-[160px] p-8 md:p-12 w-full flex flex-col md:flex-row justify-between gap-6 items-center rounded-3xl overflow-hidden shadow-xl bg-gray-900 group">
+
+            {/* Background Image Floue (Optionnel/Design) ou dégradé */}
+            <div className={`absolute inset-0 z-5 transition-colors duration-300 ${isDark
+                ? "bg-gradient-to-r from-amber-950/80 via-black/50 to-black/80"
+                : "bg-gradient-to-r from-amber-500/40 via-white/20 to-white/80"
+                }`} />
+
+            {/* Icône en arrière-plan ou sur le côté */}
+            <div className="absolute right-8 bottom-2 text-[120px] opacity-50 select-none z-5 group-hover:scale-110 transition-transform duration-300">
+                {icon}
+            </div>
+
+            <div className="flex w-full gap-6 justify-between items-center z-5 text-center md:text-left">
+                <div className="flex items-center gap-4">
+                    <span className="text-4xl hidden md:block">{icon}</span>
+                    <h2 className="text-white font-serif font-bold text-2xl tracking-wide md:text-4xl">
+                        {categorie}
+                    </h2>
+                </div>
+
+                <p className="text-amber-500 text-center text-md font-medium tracking-wider bg-black/40 px-4 py-2 rounded-2xl border border-amber-500/30">
+                    {count} {count > 1 ? 'articles disponibles' : 'article disponible'}
+                </p>
+            </div>
+        </div>
+    );
+};
+
+
+
 
 
 

@@ -92,8 +92,8 @@ export function NotificationComponent() {
                 <button type="button" className="relative p-1.5 text-amber-200 hover:text-amber-400 transition-colors cursor-pointer">
                     <span
                         className={`
-              absolute top-0.5 right-1
-              font-bold text-white text-[10px]
+              absolute top-0.5 right-0.5
+              font-bold text-white text-[8px] md:text-[10px]
               px-1.5 py-0.5
               rounded-full
               ${count > 0 ? "bg-red-600" : "bg-gray-400"}
@@ -101,7 +101,7 @@ export function NotificationComponent() {
                     >
                         {count}
                     </span>
-                    <FaBell size={25} className="text-amber-500" />
+                    <FaBell className="text-amber-500 text-[22px] md:text-2xl" />
                 </button>
             </div>
 

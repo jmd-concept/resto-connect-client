@@ -48,13 +48,15 @@ export default function NavBarComponent() {
         { label: "Reserver", icon: <LuCalendarDays size={16} />, formId: "reservation", type: "button" },
     ];
     return (
-        <div className={`fixed top-0 left-0 right-0 flex justify-between items-center gap-x-4 p-4 h-20 z-15 transition-colors duration-200
+        <div className={`fixed top-0 left-0 right-0 w-full flex justify-between items-center gap-x-2 md:gap-x-4 px-2 md:p-4 h-20 z-15 transition-colors duration-200
             ${isDark ? "bg-zinc-950 text-white" : "bg-white text-black border-b border-gray-100 shadow-sm"}`}
         >
             {/* Logo & Localisation */}
             <div className="flex items-center gap-x-4 shrink-0">
                 <h1 className="text-gray-500 text-sm whitespace-nowrap">
-                    <span className="text-[#f8c828] text-md font-bold">JMD</span> RestoConnect
+                    <img src="vercel.svg" alt="logo" />
+                    {/* <span className="text-[#f8c828] text-md font-bold">JMD</span>
+                    <br /> RestoConnect */}
                 </h1>
             </div>
 

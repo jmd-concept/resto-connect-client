@@ -2,7 +2,7 @@ import { FiSearch } from "react-icons/fi";
 
 export function SearchButton({ value, onChange }) {
     return (
-        <div className="relative w-full max-w-xs md:max-w-md mx-auto flex items-center">
+        <div className="relative w-full max-w-sm md:max-w-md mx-auto flex items-center">
             <FiSearch size={18} className="absolute left-3 text-gray-400 pointer-events-none z-10" />
             <input
                 type="text"

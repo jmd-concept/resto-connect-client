@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import HomeContextProvider from "@/context/useHomeContext";
 import ThemeProvider from "@/context/useThemeProvider";
+import ThemeToggle from "@/component/ui/ThemeToggle";
 
 import "./globals.css";
 
@@ -134,6 +135,7 @@ export default function RootLayout({ children }) {
             <ThemeProvider>
 
               <main>
+                <div className="flex md:hidden"><ThemeToggle /></div>
 
                 {children}
               </main>

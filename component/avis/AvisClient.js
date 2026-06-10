@@ -1,9 +1,13 @@
 'use client'
 
 import useClientStore from "@/stores/useClientStore";
+import { useTheme } from "@/context/useThemeProvider";
+//ICONS
 import { IoIosRefreshCircle } from "react-icons/io";
 
 export default function AvisClient({ handleShowPanel }) {
+
+    const { isDark } = useTheme();
     const {
         formData,
         loading,
@@ -14,7 +18,11 @@ export default function AvisClient({ handleShowPanel }) {
     return (
         <form
             onSubmit={handleSubmit}
-            className="max-w-4xl flex flex-col gap-4 p-6 rounded-xl bg-black/80 backdrop-blur-sm"
+            className={`max-w-4xl flex flex-col gap-4 p-6 rounded-xl backdrop-blur-sm
+                ${isDark
+                    ? "bg-black/80"
+                    : "bg-gray-500"
+                }`}
         >
 
             <div className="flex justify-between">

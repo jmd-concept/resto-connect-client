@@ -44,7 +44,7 @@ export default function CardFood({ produit = {} }) {
     };
 
     return (
-        <div className={`group relative flex flex-col rounded-3xl p-4 shadow-xs hover:shadow-2xl hover:shadow-zinc-200/50 dark:hover:shadow-none transition-all duration-300 hover:-translate-y-1.5
+        <div className={`group relative flex flex-col z-0 rounded-3xl p-4 shadow-xs hover:shadow-2xl hover:shadow-zinc-200/50 dark:hover:shadow-none transition-all duration-300 hover:-translate-y-1.5
         ${isDark
                 ? "dark:bg-zinc-900 border dark:border-zinc-800/80"
                 : "bg-white border border-zinc-100"

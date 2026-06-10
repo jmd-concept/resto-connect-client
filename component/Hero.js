@@ -16,7 +16,7 @@ export default function HeroComponent({ openOrderForm, openTableForm }) {
     ];
 
     return (
-        <div className="relative min-h-[420px] p-8 md:p-16 w-full flex flex-col md:flex-row justify-between gap-6 items-center rounded-3xl overflow-hidden shadow-2xl group">
+        <div className="relative min-h-[380px] md:min-h-[420px] p-8 md:p-16 w-full flex flex-col md:flex-row justify-between gap-6 items-center rounded-3xl overflow-hidden shadow-2xl group">
 
             <Image
                 src={image}
@@ -28,20 +28,20 @@ export default function HeroComponent({ openOrderForm, openTableForm }) {
 
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/75 z-10" />
 
-            <div className="z-10 text-center md:text-left">
-                <h2 className="text-white font-serif font-bold text-3xl tracking-wide md:text-4xl">
+            <div className="m-auto md:m-0.5 z-10 text-center md:text-left">
+                <h2 className="text-white font-serif font-bold text-4xl tracking-wide md:text-5xl">
                     JMD <span className="text-amber-400">RestoConnect</span>
                 </h2>
 
-                <p className="text-gray-200 text-sm mt-6 font-light tracking-wider hidden md:block">
+                <p className="text-gray-200 text-md mt-6 font-light tracking-wider hidden md:block">
                     Une expérience culinaire d'exception
                 </p>
 
-                <p className="max-w-md mt-2 text-gray-50">
+                <p className="max-w-lg mt-2 text-gray-50 text-lg">
                     Profitez de 20 % de réduction sur tous les fruits et légumes bio. Frais de la ferme, livrés directement chez vous.
                 </p>
 
-                <div className="relative top-5 max-w-xs flex gap-6 px-6 py-4.5 items-center justify-center rounded-xl bg-gray-50/10 hover:bg-gray-50/55">
+                <div className="relative top-5 m-auto md:m-0.5zwsa max-w-xs flex gap-6 px-6 py-4.5 items-center justify-center rounded-xl bg-gray-50/10 hover:bg-gray-50/55">
                     {socialLinks.map((social, index) => (
                         <a
                             key={index}

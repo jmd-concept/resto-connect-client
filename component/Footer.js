@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import AvisClient from "./avis/AvisClient";
+import { useUserHome } from "@/context/useHomeContext";
+import { motion, AnimatePresence } from 'framer-motion';
 // ICONS
+import { FiLogOut, FiUser } from 'react-icons/fi';
 import {
     FaWhatsapp,
     FaFacebookF,
@@ -12,11 +16,14 @@ import {
     FaMapMarkerAlt,
     FaPhoneAlt,
     FaEnvelope,
-    FaClock
+    FaClock,
+    FaArrowUp
 } from 'react-icons/fa';
 
 export default function FooterComponent({ isPanelOpen, handleShowPanel }) {
     const image = "/plats/food.webp";
+
+    const { isLoggedIn, handleLogout } = useUserHome();
 
     const socialLinks = [
         { icon: <FaWhatsapp size={22} />, href: "https://wa.me/243838120851", color: "hover:text-green-500" },
@@ -24,6 +31,10 @@ export default function FooterComponent({ isPanelOpen, handleShowPanel }) {
         { icon: <FaFacebookF size={22} />, href: "https://www.facebook.com/profile.php?id=61581381020725", color: "hover:text-blue-500" },
         { icon: <FaTiktok size={22} />, href: "https://www.tiktok.com/@jmd_group3", color: "hover:text-red-500" },
     ];
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <footer className="w-full max-w-7xl mx-auto px-4 py-8 text-gray-300">
@@ -112,7 +123,7 @@ export default function FooterComponent({ isPanelOpen, handleShowPanel }) {
             <div className="m-auto max-w-5xl flex flex-col md:flex-row items-center justify-between gap-6 mt-6 pt-2">
 
                 {/* Bouton Avis */}
-                <div className="w-full md:w-auto flex justify-center md:justify-start">
+                {/*  <div className="w-full md:w-auto flex justify-center md:justify-start">
                     <button
                         onClick={handleShowPanel}
                         className="flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-medium text-sm shadow-md hover:shadow-amber-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
@@ -126,6 +137,31 @@ export default function FooterComponent({ isPanelOpen, handleShowPanel }) {
                                 <AvisClient handleShowPanel={handleShowPanel} />
                             </div>
                         </div>
+                    )}
+                </div> */}
+
+                <div>
+                    <p className="pb-6 text-gray-400">
+                        Restez informez de nos derniers offre
+                    </p>
+
+                    {!isLoggedIn ? (
+                        <div className="flex flex-col items-center justify-center gap-4 w-full px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-medium text-sm shadow-md hover:shadow-amber-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 whitespace-nowrap self-stretch sm:self-auto">
+                            <Link
+                                href="/login"
+                                className="flex justify-center items-center gap-2 px-4 py-2 rounded-xl text-center text-sm font-medium text-white transition-colors duration-200"
+                            >
+                                <FiUser size={18} className="shrink-0" />
+                                <span className="shrink-0">Se connecter</span>
+                            </Link>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center justify-center gap-4 w-full px-3 py-2 rounded-xl text-sm font-medium bg-red-400 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30 transition-colors">
+                            <FiLogOut className="w-5 h-5" />
+                            Déconnexion
+                        </button>
                     )}
                 </div>
 
@@ -143,6 +179,23 @@ export default function FooterComponent({ isPanelOpen, handleShowPanel }) {
                         </a>
                     ))}
                 </div>
+
+                <AnimatePresence>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20, scale: 0.5 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.5 }}
+                    /*className="fixed bottom-8 right-6 z-50"*/
+                    >
+                        <button
+                            onClick={scrollToTop}
+                            className="p-3 rounded-md bg-amber-600 text-white shadow-xl shadow-sky-900/40 active:scale-90 transition-transform"
+                            aria-label="Scroll to top"
+                        >
+                            <FaArrowUp />
+                        </button>
+                    </motion.div>
+                </AnimatePresence>
             </div>
 
             <div className="flex justify-center items-center mt-6 pt-4 border-t border-gray-800/60">

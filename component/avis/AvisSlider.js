@@ -2,18 +2,19 @@
 
 import { useEffect } from "react";
 import { useTheme } from "@/context/useThemeProvider";
+import AvisClient from "./AvisClient";
 // Store & State
 import useClientStore from "@/stores/useClientStore";
-
 // Swiper Components & Modules
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-
+//ICONS
+import { FaQuoteLeft } from "react-icons/fa";
 // Swiper Styles
 import "swiper/css";
 import "swiper/css/pagination";
 
-export default function AvisSlider({ handleShowPanel }) {
+export default function AvisSlider({ isPanelOpen, handleShowPanel }) {
     const { isDark } = useTheme();
     const { avis, fetchData, loading } = useClientStore();
 
@@ -73,6 +74,15 @@ export default function AvisSlider({ handleShowPanel }) {
                     <span className="inline-block animate-pulse">✨</span>
                     Votre avis nous intéresse
                 </button>
+
+                {isPanelOpen && (
+                    <div className="fixed inset-0 flex p-4 items-center justify-center bg-black/70 backdrop-blur-sm z-50 animate-fade-in">
+                        <div className="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
+                            <AvisClient handleShowPanel={handleShowPanel} />
+                        </div>
+                    </div>
+                )}
+
             </div>
 
             <div className="w-full px-8">
@@ -107,6 +117,9 @@ export default function AvisSlider({ handleShowPanel }) {
                                     : "bg-white"}`}
                             >
                                 <div>
+                                    <div className="m-auto w-full">
+                                        <FaQuoteLeft size={18} className="text-amber-500" />
+                                    </div>
                                     <div className="flex items-center justify-between mb-4">
                                         {renderStars(item.note)}
                                         <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">

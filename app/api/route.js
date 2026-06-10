@@ -7,8 +7,8 @@ const categorieData = {
     3: { id_categorie: 3, nom: 'Desserts' },
     4: { id_categorie: 4, nom: 'Boissons' },
     5: { id_categorie: 5, nom: 'Poissons & Fruits de mer' },
-    6: { id_categorie: 6, nom: 'Autres' },
-    7: { id_categorie: 7, nom: 'Spécialités Internationales' }
+    6: { id_categorie: 6, nom: 'Spécialités Internationales' },
+    7: { id_categorie: 7, nom: 'Autres' }
 };
 
 export async function GET(request) {

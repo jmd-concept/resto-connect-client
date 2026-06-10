@@ -41,7 +41,7 @@ const Preloader = () => (
           initial={{ letterSpacing: "0.1em", opacity: 0 }}
           animate={{ letterSpacing: "0.3em", opacity: 1 }}
           transition={{ duration: 1.2 }}
-          className='text-xs block text-neutral-500'
+          className='text-sm block text-neutral-500'
         >
           PROFESSIONAL
         </motion.span>
@@ -114,7 +114,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`${isDark ? "bg-zinc-900 text-white" : "bg-white text-black"} w-screen min-h-screen font-sans overflow-x-hidden`}>
+    <div className={`${isDark ? "bg-zinc-900 text-white" : "bg-white text-black"} w-full min-h-screen font-sans`}>
 
       <ScrollToTop />
 
@@ -130,7 +130,7 @@ export default function Home() {
           />
 
           {/* Contenu principal */}
-          <main className="pt-25 flex gap-6 w-full m-auto max-w-xl md:max-w-7xl flex-col px-2 sm:items-start">
+          <main className="pt-25 flex gap-6 w-full m-auto md:max-w-7xl flex-col px-6 sm:items-start">
 
             {/* N'affiche le Hero que s'il n'y a pas de recherche en cours */}
             {!searchQuery && (
@@ -143,6 +143,7 @@ export default function Home() {
             <MenuCard />
 
             <AvisSlider
+              isPanelOpen={isPanelOpen}
               handleShowPanel={handleShowPanel}
             />
 
